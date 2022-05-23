@@ -16,7 +16,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['user_email'])) {
 
 	<body>
 		<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-			<form class="p-5 rounded shadow" action="includes/db_op.php" method="post" style="width: 30rem">
+			<form class="p-5 rounded shadow" action="http://aki.radmurad.com/public/stulogin" method="post" style="width: 30rem">
 				<h1 class="text-center pb-5 display-4">LOGIN</h1>
 				<?php if (isset($_GET['error'])) { ?>
 					<div class="alert alert-danger" role="alert">
@@ -26,7 +26,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['user_email'])) {
 				<div class="mb-3">
 					<label for="exampleInputEmail1" class="form-label">Email address
 					</label>
-					<input type="email" name="email" value="<?php if (isset($_GET['email'])) echo (htmlspecialchars($_GET['email'])) ?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+					<input type="email" name="username" value="<?php if (isset($_GET['username'])) echo (htmlspecialchars($_GET['email'])) ?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
 				<div class="mb-3">
 					<label for="exampleInputPassword1" class="form-label">Password
@@ -36,10 +36,10 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['user_email'])) {
 				<div class="mb-3">
 				<div class="btn-group btn-group-toggle" data-toggle="buttons">
 					<label class="btn btn-secondary active">
-						<input type="radio" name="options" id="admin" autocomplete="off" checked> Admin
+						<input type="radio" name="table" id="admin" value="students" autocomplete="off" checked> Admin
 					</label>
 					<label class="btn btn-secondary">
-						<input type="radio" name="options" id="instructor" autocomplete="off">Instructor
+						<input type="radio" name="table" id="instructor" value="instructors" autocomplete="off">Instructor
 					</label>
 				</div>
 				</div>
