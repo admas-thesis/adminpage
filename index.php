@@ -1,58 +1,87 @@
 <?php
+// Initialize the session
 session_start();
-
-if (!isset($_SESSION['user_id']) && !isset($_SESSION['user_email'])) {
-?>
-
-	<!DOCTYPE html>
-	<html lang="en">
-
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Secure Login System PHP</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-	</head>
-
-	<body>
-		<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-			<form class="p-5 rounded shadow" action="http://aki.radmurad.com/public/stulogin" method="post" style="width: 30rem">
-				<h1 class="text-center pb-5 display-4">LOGIN</h1>
-				<?php if (isset($_GET['error'])) { ?>
-					<div class="alert alert-danger" role="alert">
-						<?= htmlspecialchars($_GET['error']) ?>
-					</div>
-				<?php } ?>
-				<div class="mb-3">
-					<label for="exampleInputEmail1" class="form-label">Email address
-					</label>
-					<input type="email" name="username" value="<?php if (isset($_GET['username'])) echo (htmlspecialchars($_GET['email'])) ?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-				</div>
-				<div class="mb-3">
-					<label for="exampleInputPassword1" class="form-label">Password
-					</label>
-					<input type="password" class="form-control" name="password" id="exampleInputPassword1">
-				</div>
-				<div class="mb-3">
-				<div class="btn-group btn-group-toggle" data-toggle="buttons">
-					<label class="btn btn-secondary active">
-						<input type="radio" name="table" id="admin" value="students" autocomplete="off" checked> Admin
-					</label>
-					<label class="btn btn-secondary">
-						<input type="radio" name="table" id="instructor" value="instructors" autocomplete="off">Instructor
-					</label>
-				</div>
-				</div>
-				<button type="submit" class="btn btn-primary">LOGIN
-				</button>
-			</form>
-		</div>
-	</body>
-
-	</html>
-
-<?php
-} else {
-	header("Location: index.php");
+ 
+// Check if the user is already logged in, if yes then redirect him to home page
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: home.php");
+    exit;
 }
+// Include config file
+require_once "includes/config.php";
+require_once "php_login.php";
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Admin Login</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<!-- --------------style css --------------->
+<link rel="stylesheet" href="assets/styles.css">
+
+</head>
+<body>
+<div class="login-form">
+    <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <div class="text-center">
+            <a href="index.html" aria-label="Space">
+                <img class="mb-3" src="assets/img/logo.jpg" alt="Logo" width="60" height="60">
+            </a>
+          </div>
+        <div class="text-center mb-4">
+            <h1 class="h3 mb-0">Please sign in</h1>
+            <p>Signin to manage your account.</p>
+        </div>
+     
+        <div class="js-form-message mb-3" <?= (!empty($email_err)) ? 'has-error' : ''; ?>">
+            <div class="js-focus-state input-group form">
+              <div class="input-group-prepend form__prepend">
+                <span class="input-group-text form__text">
+                  <i class="fa fa-user form__text-inner"></i>
+                </span>
+              </div>
+              <input type="email" class="form-control form__input" name="email" placeholder="Email" aria-label="Email" data-msg="Please enter a valid email address." data-error-class="u-has-error" data-success-class="u-has-success" value="<?= $email; ?>">
+            </div>
+            <span class="help-block"><?= $email_err; ?></span>
+        </div>
+		<div class="form-group"<?= (!empty($password_err)) ? 'has-error' : ''; ?>">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-lock"></i>
+                    </span>                    
+                </div>
+                <input type="password" class="form-control" name="password" placeholder="Password">				
+            </div>
+            <span class="help-block"><?= $password_err; ?></span>
+
+        </div>        
+        <div class="row mb-3">
+            <div class="col-6">
+              <!-- Checkbox -->
+              <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
+                <input type="checkbox" class="custom-control-input" id="rememberMeCheckbox">
+                <label class="custom-control-label" for="rememberMeCheckbox">
+                  Remember Me
+                </label>
+              </div>
+              <!-- End Checkbox -->
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <button type="submit" class="btn btn-primary login-btn btn-block">Signin</button>
+        </div>
+        <p class="small text-center text-muted mb-0">All rights reserved. 2022 <a href="https://admasuniversity.edu.et/">admasuniversity.com.</a></p>
+    </form>
+</div>
+
+</body>
+</html>
