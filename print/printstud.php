@@ -1,7 +1,7 @@
 <?php
 	function generateRow(){
 		$contents = '';
-		include_once('../includes/config.php');
+		include_once('../includes/db/config.php');
 		$sql = "SELECT * FROM students";
 
 		//use for MySQLi OOP
@@ -21,7 +21,7 @@
 		return $contents;
 	}
 
-	require_once('../Assets/tcpdf/tcpdf.php');  
+	require_once('../assets/tcpdf/tcpdf.php');  
     $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $pdf->SetCreator(PDF_CREATOR);  
     $pdf->SetTitle("Generated PDF using TCPDF");  

@@ -1,2 +1,0 @@
-# adminpage
-the repository works!

@@ -12,14 +12,11 @@
             </li>
             <li class=""> <a href="home.php"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a> </li>
             <li class="active">
-                <a href="student.php"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Students</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                <li class=""> <a href="home.php"><span class="nav-label">4DRCS2</span></a> </li>
-                </ul>
+                <a href="student.php"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Students</span></a>
             </li>
             <li class=""> <a href="instructor.php"><i class="fa fa-user"></i> <span class="nav-label">Instructors</span></a> </li>
             <li class=""> <a href="course.php"><i class="fa fa-book"></i> <span class="nav-label">Courses</span></a> </li>
-            <li class=""> <a href="attendance.php"><i class="fa fa-calendar-plus-o"></i> <span class="nav-label">Attendance</span></a> </li>
+            <li class=""> <a href="attendance.php"><i class="fa fa-calendar"></i> <span class="nav-label">Attendance</span></a> </li>
         </ul>
     </div>
 </nav>

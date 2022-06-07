@@ -1,133 +1,26 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<!-- Button trigger modal -->
 <?php
+	session_start();
+	include_once('../includes/db/config.php');
 
-// Include config file
-require_once "includes/config.php";
- 
-// Define variables and initialize with empty values
-$Fullname   = $Username     = $Password     =  "";
-$Fullname_err = $Username_err = $Password_err =  "";
- 
-// Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
-    // Validate name
-    $input_fullname = trim($_POST["Fullname"]);
-    if(empty($input_fullname))
-    {
-        $Fullname_err = "Please enter a name.";
-    }
-    elseif(!filter_var($input_fullname, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/"))))
-    {
-        $Fullname_err = "Please enter a valid name.";
-    }
-    else
-    {
-        $Fullname = $input_fullname;
-    }
+	if(isset($_POST['add'])){
+		$fullname = $_POST['fullname'];
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		$sql = "INSERT INTO instructors 
+		(ins_name, username, password) VALUES ('$fullname', '$username', '$password')";
 
+		//use for MySQLi OOP
+		if($conection_db->query($sql)){
+			$_SESSION['message'] = 'Instructor added successfully';
+		}
+		
+		else{
+			$_SESSION['message'] = 'Something went wrong while adding';
+		}
+	}
+	else{
+		$_SESSION['message'] = 'Fill up add form first';
+	}
 
-    // Validate username
-    $input_username = trim($_POST["Username"]);
-    if(empty($input_username))
-    {
-        $Username_err = "Please enter a office.";
-    }
-    elseif(!($input_username))
-    {
-        $Username_err = "Please enter a valid office.";
-    }
-    else
-    {
-        $Username = $input_username;
-    }
-
-    // Validate password
-    $input_password = trim($_POST["Password"]);
-    if(empty($input_password))
-    {
-        $Password_err = "Please enter the age.";     
-    } 
-    elseif(!($input_password))
-    {
-        $Password_err = "Please enter a positive integer value.";
-    }
-    else
-    {
-        $Password = $input_password;
-    }
-    
-    
-    // Check input errors before inserting in database
-    if(empty($Fullname_err) && empty($Username_err) && empty($Password_err))
-    {
-        // Prepare an insert statement
-        $sql = "INSERT INTO instructors (ins_name, username, password) VALUES (?,?,?)";
-         
-        if($stmt = mysqli_prepare($conection_db, $sql))
-        {
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sss", $Fullname, $Username, $Password);
-            
-            // Set parameters
-            $Fullname   = $Fullname;
-            $Username   = $Username;
-            $Password   = $Password;
-            $param_id   = $id;
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Records created successfully. Redirect to landing page
-                header("location: instructor.php");
-                exit();
-            }
-            else
-            {
-                echo "Something went wrong. Please try again later.";
-            }
-        }
-         
-        // Close statement
-        mysqli_stmt_close($stmt);
-    }
-    
-    // Close conection_db
-    mysqli_close($conection_db);
-}
+	header('location: ../instructor.php');
 ?>
-
-<div class="modal fade" id="addnew" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add New</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <p>Please fill this form and submit to add instructor record to the database.</p>
-                                <form action="" method="post">
-                                    <div class="form-group <?= (!empty($Fullname_err)) ? 'has-error' : ''; ?>">
-                                        <label>Full Name</label>
-                                        <input type="text" name="Fullname" class="form-control" value="<?= $Fullname; ?>">
-                                        <span class="help-block"><?= $Fullname_err;?></span>
-                                    </div>
-                                    <div class="form-group <?= (!empty($Username_err)) ? 'has-error' : ''; ?>">
-                                        <label>Username</label>
-                                        <input type="text" name="Username" class="form-control" value="<?= $Username; ?>">
-                                        <span class="help-block"><?= $Username_err;?></span>
-                                    </div>
-                                    <div class="form-group <?= (!empty($Password_err)) ? 'has-error' : ''; ?>">
-                                        <label>Password</label>
-                                        <input type="password" name="Password" class="form-control" value="<?= $Password; ?>">
-                                        <span class="help-block"><?= $Password_err;?></span>
-                                    </div>
-                                    <input type="submit" class="btn btn-primary" value="Submit">
-                                    <a href="instructor.php" class="btn btn-default" style="color:red;">Cancel</a>
-                                </form>
-      </div>
-      </div>
-    </div>
-  </div>
-</div>

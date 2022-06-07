@@ -7,6 +7,15 @@
         header("location: index.php");
         exit;
     }
+    if(isset($_SESSION['message'])){
+        ?>
+        <div class="alert alert-info text-center" style="margin-top:20px;">
+            <?php echo $_SESSION['message']; ?>
+        </div>
+        <?php
+
+        unset($_SESSION['message']);
+    }
 ?>
 	<!DOCTYPE html>
 	<html>
@@ -17,7 +26,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Admin Page</title>
 
-        <?php include_once 'actions/addco.php';?>
+        <?php include 'includes/css_style/style_modal.php'; ?>
         <!-- style css php -->
         <?php include_once 'includes/css_style/style.php';?>
 
@@ -32,14 +41,14 @@
             <?php include_once 'includes/sidebar/nav_course.php';?>
 			<!-- end nav -->
 			<div id="page-wrapper" class="gray-bg dashbard-1">
-				<div class="wrapper wrapper-content">
-                <div class="col-12">
-                <br>
-                <h3 class="titulo-tabla">Record Data Table Using PHP</h3>
+                <!-- navbar -->
+                <?php include_once 'includes/sidebar/navbar.php';?>
+                <!-- end navbar -->
+                <h3 class="titulo-tabla">Courses</h3>
                 <hr>
                     <?php
                         // Include config file
-                        require_once "includes/config.php";
+                        require_once "includes/db/config.php";
                         
                         // Attempt select query execution
                         $sql = "SELECT * FROM courses";
@@ -54,7 +63,7 @@
                                 <thead>
                                     <tr>
                                         <th>Index</th>
-                                        <th>Course ID</th>
+                                        <th>Course Code</th>
                                         <th>Course Name</th>
                                     </tr>
                                 </thead>
@@ -67,12 +76,13 @@
                                             <td><?= $row['course_id'] ;?></td>
                                             <td><?= $row['course_code'] ;?></td>
                                             <td><?= $row['course_name']; ?></td>
+                                            <?php include_once 'actions/actionco.php';?>
                                         </tr>
                                     <?php
                                     }
                                     ?>
                                 </tbody>
-                <button type="button" class="btn btn-success pull-left" data-bs-toggle="modal" data-bs-target="#addnew">Add New Course</button>
+                <button type="button" class="btn btn-success pull-left" data-bs-toggle="modal" data-bs-target="#addco">Add New Course</button>
                 <a href="print/printco.php" class="btn btn-success pull-right"><span class="fa fa-print"></span> Print</a>                          
                             </table>
                         <?php
@@ -93,16 +103,15 @@
                     mysqli_close($conection_db);
                     ?>
                
-            </div>
-					
-				</div>
+            <!-- footer -->
+<?php include_once 'includes/footer/footer.php';?>
+				<!-- end footer -->
 			</div>
 		</div>
         <!-- <script> js php import</script> -->
         <?php include_once 'includes/script/js.php';?>
 
         <!-- library js -->
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
         <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>

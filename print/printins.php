@@ -1,7 +1,7 @@
 <?php
 	function generateRow(){
 		$contents = '';
-		include_once('../includes/config.php');
+		include_once('../includes/db/config.php');
 		$sql = "SELECT * FROM instructors";
 
 		//use for MySQLi OOP

@@ -29,7 +29,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <?php include_once 'includes/sidebar/navbar.php';?>
                 <!-- end navbar -->
                 <!-- footer -->
-                <?php include_once 'includes/footer/footer.php';?>
+<?php include_once 'includes/footer/footer.php';?>
 				<!-- end footer -->
 			</div>
 		</div>
