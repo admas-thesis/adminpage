@@ -13,6 +13,6 @@
 
 		}
 	
-		header('location: ../s4drcs2.php');
+		header('location: ../student.php');
 
 ?>

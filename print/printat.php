@@ -11,9 +11,8 @@
 			<tr>
 				<td>".$row['stud_id']."</td>
 				<td>".$row['stud_name']."</td>
-				<td>".$row['id_no']."</td>
-				<td>".$row['username']."</td>
-				<td>".$row['sections_sec_id']."</td>
+				<td>ADMA/".$row['id_no']."</td>
+				<td>Co Sc</td>
 			</tr>
 			";
 		}
@@ -39,14 +38,17 @@
     $content = '';  
     $content .= '
       	<h2 align="center">Admas University</h2>
-      	<h4>Students</h4>
+		<h3 align="center">Degree Students Attendance Sheet</h3>
+      	<h4>Course Title:</h4>
+		<h4>Department: Co Sc</h4>
+		<h4>Section: 4DRCo Sc2</h4> 
+		<h4>Term: 1</h4>
       	<table border="1" cellspacing="0" cellpadding="3">  
            <tr>  
                 	<th width="5%">Index</th>
 				<th width="30%">Full Name</th>
 				<th width="30%">Student ID</th>
-				<th width="30%">Username</th>
-				<th width="15%">Section</th>  
+				<th width="30%">Department</th> 
            </tr>  
       ';  
     $content .= generateRow();  

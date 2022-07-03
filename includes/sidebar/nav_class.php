@@ -11,11 +11,11 @@
                 </div>
             </li>
             <li class=""> <a href="home.php"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a> </li>
-            <li class=""> <a href="student.php"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Students</span></a> </li>
-            <li class=""><a href="class.php"><i class="fa fa-building-o"></i> <span class="nav-label">Class</span></a></li>
+            <li class=""><a href="student.php"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Students</span></a></li>
+            <li class="active"><a href="class.php"><i class="fa fa-building-o"></i> <span class="nav-label">Class</span></a></li>
             <li class=""> <a href="instructor.php"><i class="fa fa-user"></i> <span class="nav-label">Instructors</span></a> </li>
             <li class=""> <a href="course.php"><i class="fa fa-book"></i> <span class="nav-label">Courses</span></a> </li>
-            <li class="active"><a href="attendance.php"><i class="fa fa-calendar"></i> <span class="nav-label">Attendance</span></a></li>
+            <li class=""> <a href="attendance.php"><i class="fa fa-calendar"></i> <span class="nav-label">Attendance</span></a> </li>
         </ul>
     </div>
 </nav>

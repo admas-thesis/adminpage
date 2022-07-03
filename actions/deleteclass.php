@@ -4,11 +4,11 @@
 
 	if(isset($_GET['id'])){
 		
-			$sql = "DELETE FROM students WHERE stud_id = '".$_GET['id']."'";
+			$sql = "DELETE FROM course_comb WHERE coco_id = '".$_GET['id']."'";
 			//if-else statement in executing our query
 			
 	if($conection_db->query($sql)){
-				$_SESSION['message'] = 'Student deleted successfully';
+				$_SESSION['message'] = 'Class deleted successfully';
 			}
 			
 			else{
@@ -16,8 +16,8 @@
 			}
 		}
 		else{
-			$_SESSION['message'] = 'Select a student to delete first';
+			$_SESSION['message'] = 'Select a class to delete first';
 		}
-	header('location: ../student.php');
+	header('location: ../class.php');
 
 ?>

@@ -25,6 +25,6 @@
 			$_SESSION['message'] = 'Fill up edit form first';
 		}
 	
-		header('location: ../s4drcs2.php');
+		header('location: ../student.php');
 
 ?>
