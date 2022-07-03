@@ -77,7 +77,7 @@
 				<input type="hidden" class="form-control" name="id" value="<?php echo $row['coco_id']; ?>">
                         <div class="form-group">
                             <select class="custom-select" name="course" required>
-                                    <option value="<?php echo $row['courses_course_id']; ?>"><?php echo $row['courses_course_id']; ?> </option>
+                                    <option value="<?php echo $row['course_name']; ?>"><?php echo $row['course_name']; ?> </option>
                                     <?php 
                                         $co ="SELECT * FROM courses";
                                         $coout = $conection_db->query($co);
@@ -91,7 +91,7 @@
                             </div>
                             <div class="form-group">
                             <select class="custom-select" name="instructor" required>
-                                    <option value="<?php echo $row['instructors_ins_id']; ?>"><?php echo $row['instructors_ins_id']; ?> </option>
+                                    <option value="<?php echo $row['ins_name']; ?>"><?php echo $row['ins_name']; ?> </option>
                                     <?php 
                                         $ins ="SELECT * FROM instructors";
                                         $insout = $conection_db->query($ins);
@@ -105,7 +105,7 @@
                             </div>
                       <div class="form-group">
                             <select class="custom-select" name="section">
-                                    <option value="<?php echo $row['sections_sec_id']; ?>"><?php echo $row['sections_sec_id']; ?> </option>
+                                    <option value="<?php echo $row['sec_name']; ?>"><?php echo $row['sec_name']; ?> </option>
                                     <?php 
                                         $sec ="SELECT * FROM sections";
                                         $secout = $conection_db->query($sec);
