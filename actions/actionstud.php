@@ -22,6 +22,9 @@
                               <input type="password" class="form-control" placeholder="Password" name="password" required>
                             </div> 
                             <div class="form-group">
+                              <input type="password" class="form-control" placeholder="Confirm Password" name=" confirm-password" required>
+                            </div> 
+                            <div class="form-group">
                             <select class="custom-select" name="section" required>
                                     <option value="" disabled= ""selected="">Select Section</option>
                                     <?php 

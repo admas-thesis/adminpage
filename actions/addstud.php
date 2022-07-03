@@ -7,10 +7,12 @@
 		$sid = $_POST['Id'];
 		$username = $_POST['username'];
 		$password = $_POST['password'];
+		$password1 = $_POST['confirm-password'];
 		$section = $_POST['section'];
 		$sql = "INSERT INTO students 
 		(stud_name, id_no, username, password, sections_sec_id) VALUES ('$fullname', '$sid','$username', '$password', '$section')";
 
+		if($password==$password1){
 		//use for MySQLi OOP
 		if($conection_db->query($sql)){
 			$_SESSION['message'] = 'Student added successfully';
@@ -19,6 +21,10 @@
 		else{
 			$_SESSION['message'] = 'Something went wrong while adding';
 		}
+	}
+	else{
+		$_SESSION['message'] = 'Password mismatch!';
+	}
 	}
 	else{
 		$_SESSION['message'] = 'Fill up add form first';
