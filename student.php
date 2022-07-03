@@ -77,7 +77,6 @@
                                         <th>Full Name</th>
                                         <th>Student ID</th>
                                         <th>Username</th>
-                                        <th>Password</th>
                                         <th>Section</th>
                                         <th>Action</th>
                                     </tr>
@@ -95,7 +94,6 @@
                                     <td><?php echo $row['stud_name']; ?></td>
                                     <td><?php echo $row['id_no']; ?></td>
                                     <td><?php echo $row['username']; ?></td>
-                                    <td><?php echo $row['password']; ?></td>
                                     <td><?php echo $row['sections_sec_id']; ?></td>
                                     <td>
                                         <a href="#view_<?php echo $row['stud_id']; ?>" data-bs-toggle="modal"><i class='fa fa-eye' aria-hidden='true' style='color:black'></i></a>
