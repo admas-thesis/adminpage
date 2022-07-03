@@ -142,13 +142,13 @@
       <form method="POST" action="actions/viewclass.php?id=<?php echo $row['coco_id']; ?>">
 				<input type="hidden" class="form-control" name="id" value="<?php echo $row['coco_id']; ?>">
                       <div class="form-group">
-                        <input class="form-control" name="course" value="<?php echo $row['courses_course_id']; ?>" disabled>
+                        <input class="form-control" name="course" value="<?php echo $row['course_name']; ?>" disabled>
                       </div>
                       <div class="form-group">
-                        <input class="form-control" name="instructor" value="<?php echo $row['instructors_ins_id']; ?>" disabled>
+                        <input class="form-control" name="instructor" value="<?php echo $row['ins_name']; ?>" disabled>
                       </div> 
                       <div class="form-group">
-                        <input class="form-control" name="section" value="<?php echo $row['sections_sec_id']; ?>" disabled>
+                        <input class="form-control" name="section" value="<?php echo $row['sec_name']; ?>" disabled>
                       </div> 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
