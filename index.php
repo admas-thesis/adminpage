@@ -25,7 +25,7 @@ require_once "php_login.php";
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 <!-- --------------style css --------------->
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/assets/css/styles.css">
 
 </head>
 <body>
