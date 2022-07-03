@@ -53,15 +53,15 @@
                                 <thead>
                                     <tr>
                                         <th>Index</th>
-                                        <th>Course ID</th>
-                                        <th>Instructor ID</th>
+                                        <th>Course</th>
+                                        <th>Instructor</th>
                                         <th>Section</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 						<?php
-							$sql =" SELECT * FROM course_comb";
+							$sql =" SELECT coco_id, course_name, ins_name, sec_name from course_comb join courses on courses_course_id=course_id join instructors on instructors_ins_id=ins_id join sections on sections_sec_id=sec_id;";
 
 							//use for MySQLi-OOP
 							$query = $conection_db->query($sql);
@@ -69,9 +69,9 @@
                                 ?>
 								<tr>
 						    		<td><?php echo $row['coco_id']; ?></td>
-						    		<td><?php echo $row['courses_course_id']; ?></td>
-						    		<td><?php echo $row['instructors_ins_id']; ?></td>
-						    		<td><?php echo $row['sections_sec_id']; ?></td>
+						    		<td><?php echo $row['course_name']; ?></td>
+						    		<td><?php echo $row['ins_name']; ?></td>
+						    		<td><?php echo $row['sec_name']; ?></td>
 						    		<td>
 						    			<a href="#view_<?php echo $row['coco_id']; ?>" data-bs-toggle="modal"><i class='fa fa-eye' aria-hidden='true' style='color:black'></i></a>
 						    			<a href="#edit_<?php echo $row['coco_id']; ?>" data-bs-toggle="modal"><i class='fa fa-edit' aria-hidden='true' style='color:#3ca23c;'></i></a>
