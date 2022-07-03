@@ -85,7 +85,7 @@
                             ?>
 					</tbody>
 						
-                            <button type="button" class="btn btn-success pull-left" data-bs-toggle="modal" data-bs-target="#addclass">Add New Class</button>
+                            <button type="button" class="btn btn-success pull-left" data-bs-toggle="modal" data-bs-target="#addclass">Assign New Class</button>
                             <a href="print/printclass.php" class="btn btn-success pull-right"><span class="fa fa-print"></span> Print</a>
                         </table>
                         <?php
