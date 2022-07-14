@@ -22,9 +22,6 @@
                               <input type="password" class="form-control" placeholder="Password" name="password" required>
                             </div> 
                             <div class="form-group">
-                              <input type="password" class="form-control" placeholder="Confirm Password" name=" confirm-password" required>
-                            </div> 
-                            <div class="form-group">
                             <select class="custom-select" name="section" required>
                                     <option value="" disabled= ""selected="">Select Section</option>
                                     <?php 
@@ -155,3 +152,42 @@
       </div>
     </div>
   </div>
+
+
+
+  <!-- Print -->
+<div class="modal fade" id="printstud" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Print</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <p>Please select records to print.</p>
+      <form method="POST" action="print/printstud.php">
+                            <div class="form-group">
+                            <select class="custom-select" name="section" required>
+                                    <option value="<?php echo "$section" ?>">Current Section</option>
+                                    <?php 
+                                        $sec ="SELECT * FROM sections";
+                                        $secout = $conection_db->query($sec);
+                                        while($fetchsec = $secout->fetch_assoc()){
+                                        ?>
+                                        <option value="<?php echo $fetchsec['sec_name']; ?>" ><?php echo $fetchsec['sec_name']; ?> </option>
+                                    <?php
+                                        }
+                                        ?>
+                            </select>
+                            </div>
+        </div>  
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
+                <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Print</a>
+            </div>
+			</form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

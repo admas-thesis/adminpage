@@ -1,11 +1,15 @@
 <?php
 	function generateRow(){
-		$contents = '';
+		if(isset($_POST['submit'])){
+			$section = $_POST['section'];
+		}
+	
 		include_once('../includes/db/config.php');
-		$sql = "SELECT * FROM students";
-
-		//use for MySQLi OOP
+		$sql ="SELECT stud_id,stud_name,id_no,username,password,sec_name FROM students 
+		join sections on sections_sec_id = sec_id where sec_name = '".$section."'";
 		$query = $conection_db->query($sql);
+		$contents = '';
+		//use for MySQLi OOP
 		while($row = $query->fetch_assoc()){
 			$contents .= "
 			<tr>
@@ -13,7 +17,7 @@
 				<td>".$row['stud_name']."</td>
 				<td>".$row['id_no']."</td>
 				<td>".$row['username']."</td>
-				<td>".$row['sections_sec_id']."</td>
+				<td>".$row['sec_name']."</td>
 			</tr>
 			";
 		}

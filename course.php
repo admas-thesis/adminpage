@@ -82,6 +82,7 @@
                                     }
                                     ?>
                                 </tbody>
+                <?php include_once 'actions/actionco.php';?>
                 <button type="button" class="btn btn-success pull-left" data-bs-toggle="modal" data-bs-target="#addco">Add New Course</button>
                 <a href="print/printco.php" class="btn btn-success pull-right"><span class="fa fa-print"></span> Print</a>                          
                             </table>

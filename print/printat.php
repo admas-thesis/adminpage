@@ -1,27 +1,42 @@
 <?php
-	function generateRow(){
-		$contents = '';
+		if(isset($_POST['submit'])){
+			$course = $_POST['course'];
+			$section = $_POST['section'];
+			$term = $_POST['term'];
+		}
 		include_once('../includes/db/config.php');
-		$sql = "SELECT * FROM students";
-
+		$co ="SELECT course_code,course_name from courses where course_id = '".$course."' ";
+		$sec ="SELECT sec_name from sections where sec_id = '".$section."' ";
+		$query=" SELECT distinct ses_date from session where sections_sec_id = '".$section."' and courses_course_id = '".$course."'";
+		
+		$sql =" SELECT att_id,status,students_id_no,session_ses_id,stud_name,ses_date,courses_course_id from attendance 
+						 join session on session_ses_id=ses_id 
+						 join students on students_id_no = id_no where courses_course_id = '".$course."'";
+		$coout=mysqli_query($conection_db,$co);
+		$secout=mysqli_query($conection_db,$sec);
+		$output=mysqli_query($conection_db,$query);
+		$result=mysqli_query($conection_db,$sql); 
+		while($out = $coout->fetch_assoc()){
+			$cocdis = $out['course_code'];
+			$condis = $out['course_name'];
+		}
+		while($sout = $secout->fetch_assoc()){
+			$sndis = $sout['sec_name'];
+		}
 		//use for MySQLi OOP
-		$query = $conection_db->query($sql);
-		while($row = $query->fetch_assoc()){
+		$contents = '';
+		while($in = $result->fetch_assoc()){
 			$contents .= "
 			<tr>
-				<td>".$row['stud_id']."</td>
-				<td>".$row['stud_name']."</td>
-				<td>ADMA/".$row['id_no']."</td>
+				<td>".$in['stud_name']."</td>
+				<td>ADMA/".$in['students_id_no']."</td>
 				<td>Co Sc</td>
+				<td>".$in['status']."</td>
 			</tr>
 			";
 		}
-		
-		return $contents;
-	}
-
 	require_once('../Assets/tcpdf/tcpdf.php');  
-    $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
+    $pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $pdf->SetCreator(PDF_CREATOR);  
     $pdf->SetTitle("Generated PDF using TCPDF");  
     $pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);  
@@ -34,26 +49,42 @@
     $pdf->setPrintFooter(false);  
     $pdf->SetAutoPageBreak(TRUE, 10);  
     $pdf->SetFont('helvetica', '', 11);  
-    $pdf->AddPage();  
-    $content = '';  
-    $content .= '
-      	<h2 align="center">Admas University</h2>
-		<h3 align="center">Degree Students Attendance Sheet</h3>
-      	<h4>Course Title:</h4>
+    $pdf->AddPage();
+	$content = '';
+    $content .= "
+      	<h2 align='center'>Admas University</h2>
+		<h3 align='center'>Degree Students Attendance Sheet</h3>
+      	<h4>Course Title: ".$cocdis."/".$condis.":</h4>
 		<h4>Department: Co Sc</h4>
-		<h4>Section: 4DRCo Sc2</h4> 
-		<h4>Term: 1</h4>
-      	<table border="1" cellspacing="0" cellpadding="3">  
+		<h4>Section: ".$sndis."</h4> 
+		<h4>Term: ".$term." </h4>
+      	<table>  
            <tr>  
-                	<th width="5%">Index</th>
-				<th width="30%">Full Name</th>
-				<th width="30%">Student ID</th>
-				<th width="30%">Department</th> 
-           </tr>  
-      ';  
-    $content .= generateRow();  
-    $content .= '</table>';  
-    $pdf->writeHTML($content);  
+				<th>Full Name</th>
+				<th>Student ID</th>
+				<th>Department</th>";
+	while($row = $output->fetch_assoc()){
+	$content .= "
+			<th>".$row['ses_date']."</th>
+      ";}
+	$content .= "</tr>";
+    $content .= $contents;  
+    $content .= "</table>
+	<style>
+	table {
+		border-collapse:collapse;
+	}
+	th,td {
+		border:1px solid #888;
+	}
+	table tr th {
+		background-color:#888;
+		color:#fff;
+		font-weight:bold;
+	}
+	</style>
+	";  
+    $pdf->WriteHTMLCell(290,0,3,'',$content,0); 
     $pdf->Output('Attendance.pdf', 'I');
 	
 

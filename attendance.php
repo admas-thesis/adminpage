@@ -1,4 +1,5 @@
 <?php
+     include_once('includes/db/config.php');
     // Initialize the session
     session_start();
     
@@ -16,6 +17,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Admin Page</title>
+
+        <?php include 'includes/css_style/style_modal.php'; ?>
         <!-- style css php -->
         <?php include_once 'includes/css_style/style.php';?>
 
@@ -30,41 +33,49 @@
             <?php include_once 'includes/sidebar/nav_attendance.php';?>
 			<!-- end nav -->
 			<div id="page-wrapper" class="gray-bg dashbard-1">
-                 <!-- navbar -->
-                 <?php include_once 'includes/sidebar/navbar.php';?>
+                <!-- navbar -->
+                <?php include_once 'includes/sidebar/navbar.php';?>
                 <!-- end navbar -->
                 <h3 class="titulo-tabla">Attendance List</h3>
                 <hr>
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
-                        <tr>
-                        <td>Student Name</td>
-                        <td>Student ID</td>
-                        <td>Department</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                         require_once "includes/db/config.php";
-
-                            $sql = "SELECT * FROM students";
-
-                            //use for MySQLi-OOP
-                            $query = $conection_db->query($sql);
-							while($row = $query->fetch_assoc()){
-                                ?>
-                            <tr>
-                            <td><?php echo $row['stud_name']; ?></td>
-						    <td><?php echo $row['id_no']; ?></td>
-                            <td>Co Sc</td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
-
-                    </tbody>
-                    <a href="print/printat.php" class="btn btn-success pull-right"><span class="fa fa-print"></span> Print</a>
-                </table>
+    <form  method="POST" action="filter2.php" id="attendance">  
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-3">
+                <select class="custom-select" name="course" id="course" required>
+                       <option value="" disabled= ""selected="">Select Course</option>
+                        <?php 
+                        $co ="SELECT * FROM courses";
+                        $coout = $conection_db->query($co);
+                        while($fetchco = $coout->fetch_assoc()){
+                        ?>
+                        <option value="<?php echo $fetchco['course_id']; ?>" ><?php echo $fetchco['course_code']; ?>: <?php echo $fetchco['course_name']; ?> </option>
+                    <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+    
+                <div class="col-md-3">
+                <select class="custom-select" name="section" id="section" required>
+                        <option value="" disabled= ""selected="">Select Section</option>
+                        <?php 
+                        $result ="SELECT * FROM sections";
+                        $output = $conection_db->query($result);
+                        while($fetch = $output->fetch_assoc()){
+                        ?>
+                        <option value="<?php echo $fetch['sec_id']; ?>" ><?php echo $fetch['sec_name']; ?> </option>
+                    <?php
+                        }
+                        ?>
+                </select>
+                </div>
+                <div class="col-md-3">
+                <input type="submit" value="Submit" name="submit" class="btn btn-success">
+                </div>
+        </div>
+    </div>
+    </form>    
             <!-- footer -->
 <?php include_once 'includes/footer/footer.php';?>
 				<!-- end footer -->
@@ -86,5 +97,6 @@
         
         <!-- internal script -->
         <script src="assets/js/export.js"></script>
+		<!-- <script> import</script> -->
 	</body>
 </html>

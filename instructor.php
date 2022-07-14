@@ -61,6 +61,7 @@ if(isset($_SESSION['message'])){
                                         <th>Index</th>
                                         <th>Full Name</th>
                                         <th>Username</th>
+                                        <th>Password</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -77,6 +78,7 @@ if(isset($_SESSION['message'])){
 						    		<td><?php echo $row['ins_id']; ?></td>
 						    		<td><?php echo $row['ins_name']; ?></td>
 						    		<td><?php echo $row['username']; ?></td>
+						    		<td><?php echo $row['password']; ?></td>
 						    		<td>
 						    			<a href="#view_<?php echo $row['ins_id']; ?>" data-bs-toggle="modal"><i class='fa fa-eye' aria-hidden='true' style='color:black'></i></a>
 						    			<a href="#edit_<?php echo $row['ins_id']; ?>" data-bs-toggle="modal"><i class='fa fa-edit' aria-hidden='true' style='color:#3ca23c;'></i></a>
@@ -88,6 +90,7 @@ if(isset($_SESSION['message'])){
                                     }
                                     ?>
                                 </tbody>
+                                <?php include('actions/actionins.php'); ?>
                                 <button type="button" class="btn btn-success pull-left" data-bs-toggle="modal" data-bs-target="#addins">Add New Instructor</button>
                                 <a href="print/printins.php" class="btn btn-success pull-right"><span class="fa fa-print"></span> Print</a>                          
                             </table>
