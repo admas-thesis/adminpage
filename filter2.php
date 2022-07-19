@@ -55,16 +55,10 @@
                             }
                         }
                         echo "<tr>";
-<<<<<<< HEAD
                         echo "<th>" . "Student Name" . "</th>";
                         echo "<th>" . "Student ID" . "</th>";
                         foreach ($arrays as $dates) {
                             echo "<th>" . $dates . "</th>";
-=======
-                        echo "<td>" . "Student Name" . "</td>";
-                        foreach ($arrays as $dates) {
-                            echo "<td>" . $dates . "</td>";
->>>>>>> 8fc4d818cd10ee950e4a471d7b10079ba9de899b
                         }
                         echo "</tr>";
                         ?>
@@ -73,7 +67,6 @@
                         <?php
                         //fetch Student name from db and add to student_name array
                         $student_name = array();
-<<<<<<< HEAD
                         $student_id = array();
                        
                         $query = "SELECT id_no from students  where sections_sec_id = '$section'";
@@ -90,13 +83,6 @@
                         while ($studrows = mysqli_fetch_assoc($studresult)) {
                             foreach ($studrows as $studcount) {
                                 array_push($student_name, $studcount);
-=======
-                        $query = "SELECT id_no from students  where sections_sec_id = '$section'";
-                        $result = mysqli_query($conection_db, $query) or die(mysqli_error($conection_db));
-                        while ($rows = mysqli_fetch_assoc($result)) {
-                            foreach ($rows as $count) {
-                                array_push($student_name, $count);
->>>>>>> 8fc4d818cd10ee950e4a471d7b10079ba9de899b
                             }
                         }
 
@@ -115,21 +101,13 @@
 
                         //select a student from student list and get the status on a session
                         // and store attendance of that student for all sessions on sub_array 
-<<<<<<< HEAD
                         for ($a = 0; $a < sizeof($student_id); $a++) {
-=======
-                        for ($a = 0; $a < sizeof($student_name); $a++) {
->>>>>>> 8fc4d818cd10ee950e4a471d7b10079ba9de899b
 
 
                             for ($d = 0; $d < sizeof($att_date); $d++) {
                                 $sqm = "select status from attendance join session on
                                          session_ses_id = session.ses_id where ses_date= '$att_date[$d]' and
-<<<<<<< HEAD
                                           students_id_no = '$student_id[$a]' and courses_course_id= '$course' ;";
-=======
-                                          students_id_no = '$student_name[$a]' and courses_course_id= '$course' ;";
->>>>>>> 8fc4d818cd10ee950e4a471d7b10079ba9de899b
                                 $sub_data = mysqli_query($conection_db, $sqm) or die(mysqli_error($conection_db));
 
                                 while ($rowsr = mysqli_fetch_assoc($sub_data)) {
@@ -149,10 +127,7 @@
                         for ($i = 0; $i < sizeof($main_array); $i++) {
                             echo "<tr>";
                             echo "<td>" . $student_name[$i] . "</td>";
-<<<<<<< HEAD
                             echo "<td>" . $student_id[$i] . "</td>";
-=======
->>>>>>> 8fc4d818cd10ee950e4a471d7b10079ba9de899b
                             //insert status of every student into each column
                             for ($jj = 0; $jj < sizeof($main_array[$i]); $jj++) {
                                 print('<td>' . $main_array[$i][$jj] . '</td>');
@@ -163,12 +138,8 @@
                         ?>
 
                     </tbody>
-<<<<<<< HEAD
                     <?php include('actions/actionattendance.php'); ?>
                     <button type="button" class="btn btn-success pull-right" data-bs-toggle="modal" data-bs-target="#printat">Print</button>
-=======
-                    <a href="print/printat.php" class="btn btn-success pull-right"><span class="fa fa-print"></span> Print</a>
->>>>>>> 8fc4d818cd10ee950e4a471d7b10079ba9de899b
                 </table>
             </div>
 				</div>
