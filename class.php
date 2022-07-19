@@ -61,7 +61,8 @@
                                 </thead>
                                 <tbody>
 						<?php
-							$sql =" SELECT coco_id, course_name, ins_name, sec_name from course_comb join courses on courses_course_id=course_id join instructors on instructors_ins_id=ins_id join sections on sections_sec_id=sec_id;";
+							$sql =" SELECT coco_id, course_name, ins_name, sec_name from course_comb join 
+                            courses on courses_course_id=course_id join instructors on instructors_ins_id=ins_id join sections on sections_sec_id=sec_id;";
 
 							//use for MySQLi-OOP
 							$query = $conection_db->query($sql);

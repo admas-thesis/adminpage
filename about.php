@@ -47,7 +47,6 @@
                 <h3 class="titulo-tabla">About</h3>
                 <hr>
                
-               
             <!-- footer -->
 <?php include_once 'includes/footer/footer.php';?>
 				<!-- end footer -->

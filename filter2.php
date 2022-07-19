@@ -42,52 +42,107 @@
                 <!-- end navbar -->
                 <h3 class="titulo-tabla">Attendance List</h3>
 <hr>
-<?php
- require_once "includes/db/config.php";
-$query=" SELECT distinct ses_date from session where sections_sec_id = '".$section."' and courses_course_id = '".$course."'";
-
-$sql =" SELECT att_id,status,students_id_no,session_ses_id,stud_name,ses_date,courses_course_id from attendance 
-                 join session on session_ses_id=ses_id 
-                 join students on students_id_no = id_no where courses_course_id = '".$course."'";
-
-$output=mysqli_query($conection_db,$query);
-$result=mysqli_query($conection_db,$sql);          
-?>
 <table id="example" class="table table-striped table-bordered" style="width:100%">
-    <thead>
-                        <tr>
-                            <th>Student Name</th>
-                            <th>Student ID</th>
-        <?php
-           
-            while($row = $output->fetch_assoc()){   
-        ?>
-                            <th><?php echo $row['ses_date']; ?></th>
-        <?php
-            }
-        ?>
-                        </tr>
-    </thead>
-    <tbody>
-            <?php
-                while($in = $result->fetch_assoc()){
-                    ?>
-                    <tr>
-                        <td><?php echo $in['stud_name']; ?></td>
-                        <td><?php echo $in['students_id_no']; ?></td>
-                        <td><?php echo $in['status']; ?></td>
-                    </tr>
-                <?php
-                }
-                ?>
-    </tbody>
-    <?php include('actions/actionattendance.php'); ?>
-    <button type="button" class="btn btn-success pull-right" data-bs-toggle="modal" data-bs-target="#printstud">Print</button>
-   </table>
-               
-            <!-- footer -->
-<?php include_once 'includes/footer/footer.php';?>
-				<!-- end footer -->
+                    <thead>
+                        <?php
+                         require_once "includes/db/config.php";
+                        $arrays = array();
+                        $query = "SELECT distinct ses_date from session where sections_sec_id = '".$section."' and courses_course_id = '".$course."'";
+                        $result = mysqli_query($conection_db, $query) or die(mysqli_error($conection_db));
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            foreach ($row as $data) {
+                                array_push($arrays, $data);
+                            }
+                        }
+                        echo "<tr>";
+                        echo "<th>" . "Student Name" . "</th>";
+                        echo "<th>" . "Student ID" . "</th>";
+                        foreach ($arrays as $dates) {
+                            echo "<th>" . $dates . "</th>";
+                        }
+                        echo "</tr>";
+                        ?>
+                    </thead>
+                    <tbody>
+                        <?php
+                        //fetch Student name from db and add to student_name array
+                        $student_name = array();
+                        $student_id = array();
+                       
+                        $query = "SELECT id_no from students  where sections_sec_id = '$section'";
+                        $studquery = "SELECT stud_name from students  where sections_sec_id = '$section'";
+                        
+                        $result = mysqli_query($conection_db, $query) or die(mysqli_error($conection_db));
+                        while ($rows = mysqli_fetch_assoc($result)) {
+                            foreach ($rows as $count) {
+                                array_push($student_id, $count);
+                            }
+                        }
+                        
+                        $studresult = mysqli_query($conection_db, $studquery) or die(mysqli_error($conection_db));
+                        while ($studrows = mysqli_fetch_assoc($studresult)) {
+                            foreach ($studrows as $studcount) {
+                                array_push($student_name, $studcount);
+                            }
+                        }
+
+                        //fetch Session dates from db and add to att_date array
+                        $att_date = array();
+                        $sql = "SELECT distinct ses_date from session where sections_sec_id = '$section' ";
+                        $data = mysqli_query($conection_db, $sql) or die(mysqli_error($conection_db));
+
+                        while ($row = mysqli_fetch_assoc($data)) {
+                            foreach ($row as $count_date) {
+                                array_push($att_date, $count_date);
+                            }
+                        }
+                        $main_array = array();
+                        $sub_array = array();
+
+                        //select a student from student list and get the status on a session
+                        // and store attendance of that student for all sessions on sub_array 
+                        for ($a = 0; $a < sizeof($student_id); $a++) {
+
+
+                            for ($d = 0; $d < sizeof($att_date); $d++) {
+                                $sqm = "select status from attendance join session on
+                                         session_ses_id = session.ses_id where ses_date= '$att_date[$d]' and
+                                          students_id_no = '$student_id[$a]' and courses_course_id= '$course' ;";
+                                $sub_data = mysqli_query($conection_db, $sqm) or die(mysqli_error($conection_db));
+
+                                while ($rowsr = mysqli_fetch_assoc($sub_data)) {
+                                    foreach ($rowsr as $sub_count) {
+                                        array_push($sub_array, $sub_count);
+                                    }
+                                }
+                            }
+                            //Add that students data to the main_array
+                            $main_array[$a] = $sub_array;
+                            //remove first students data from Sub_array
+                            unset($sub_array);
+                            //initialize Subarray
+                            $sub_array = array();
+                        }
+                        // make as many as rows as students number
+                        for ($i = 0; $i < sizeof($main_array); $i++) {
+                            echo "<tr>";
+                            echo "<td>" . $student_name[$i] . "</td>";
+                            echo "<td>" . $student_id[$i] . "</td>";
+                            //insert status of every student into each column
+                            for ($jj = 0; $jj < sizeof($main_array[$i]); $jj++) {
+                                print('<td>' . $main_array[$i][$jj] . '</td>');
+                            }
+                            echo "</tr>";
+                        }
+
+                        ?>
+
+                    </tbody>
+                    <?php include('actions/actionattendance.php'); ?>
+                    <button type="button" class="btn btn-success pull-right" data-bs-toggle="modal" data-bs-target="#printat">Print</button>
+                </table>
+            </div>
+				</div>
 			</div>
 		</div>
         <!-- <script> js php import</script> -->

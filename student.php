@@ -46,6 +46,18 @@
                 <!-- navbar -->
                 <?php include_once 'includes/sidebar/navbar.php';?>
                 <!-- end navbar -->
+                <?php 
+                    if(isset($_SESSION['status']))
+                    {
+                        ?>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Hey!</strong> <?php echo $_SESSION['status']; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php
+                        unset($_SESSION['status']);
+                    }
+                ?>
                 <h3 class="titulo-tabla">Student List</h3>
                 <hr>
     <form  method="POST" action="filter.php" id="student">  
@@ -60,7 +72,7 @@
                         $output = $conection_db->query($result);
                         while($fetch = $output->fetch_assoc()){
                         ?>
-                        <option value="<?php echo $fetch['sec_name']; ?>" ><?php echo $fetch['sec_name']; ?> </option>
+                        <option value="<?php echo $fetch['sec_id']; ?>" ><?php echo $fetch['sec_name']; ?> </option>
                     <?php
                         }
                         ?>

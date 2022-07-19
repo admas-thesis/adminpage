@@ -1,26 +1,18 @@
 <?php
-	function generateRow(){
-		$contents = '';
 		include_once('../includes/db/config.php');
-		$sql = "SELECT * FROM instructors";
-
-		//use for MySQLi OOP
-		$query = $conection_db->query($sql);
-		while($row = $query->fetch_assoc()){
+		$sql ="SELECT * FROM instructors";
+		$result = mysqli_query($conection_db, $sql);
+		while($row = $result->fetch_assoc()){
 			$contents .= "
 			<tr>
-				<td>".$row['ins_id']."</td>
-				<td>".$row['ins_name']."</td>
-				<td>".$row['username']."</td>
+			<td> ".$row['ins_id']." </td>
+			<td> ".$row['ins_name']." </td>
+			<td> ".$row['username']." </td>
 			</tr>
 			";
-		}
-		
-		return $contents;
-	}
-
+			}
 	require_once('../Assets/tcpdf/tcpdf.php');  
-    $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
+    $pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $pdf->SetCreator(PDF_CREATOR);  
     $pdf->SetTitle("Generated PDF using TCPDF");  
     $pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);  
@@ -33,22 +25,36 @@
     $pdf->setPrintFooter(false);  
     $pdf->SetAutoPageBreak(TRUE, 10);  
     $pdf->SetFont('helvetica', '', 11);  
-    $pdf->AddPage();  
-    $content = '';  
-    $content .= '
-      	<h2 align="center">Admas University</h2>
-      	<h4>Instructors</h4>
-      	<table border="1" cellspacing="0" cellpadding="3">  
-           <tr>  
-                <th width="5%">Index</th>
-				<th width="30%">Full Name</th>
-				<th width="30%">Username</th> 
-           </tr>  
-      ';  
-    $content .= generateRow();  
-    $content .= '</table>';  
-    $pdf->writeHTML($content);  
+    $pdf->AddPage();
+	$content = '';
+    $content .= "
+      	<h2>Admas University</h2>
+		<h3>Instructors List</h3> 
+      	<table>
+		  <tr>
+		  	<th>Index</th>
+		  	<th>Full Name</th>
+			<th>Username</th>
+			</tr>";
+    $content .= $contents;  
+    $content .= "</table>
+	<style>
+	h2,h3 {
+		text-align: center;
+	  }
+	table {
+		border-collapse:collapse;
+	}
+	th,td {
+		border:1px solid #888;
+	}
+	table tr th {
+		background-color:#888;
+		color:#fff;
+		font-weight:bold;
+	}
+	</style>
+	";  
+    $pdf->WriteHTMLCell(290,0,3,'',$content,0); 
     $pdf->Output('Instructors.pdf', 'I');
-	
-
 ?>

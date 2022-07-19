@@ -60,8 +60,8 @@
                         </thead>
                         <tbody>
                 <?php
-                    $sql ="SELECT stud_id,stud_name,id_no,username,password,sec_name FROM students 
-                    join sections on sections_sec_id = sec_id where sec_name = '".$section."'";
+                    $sql ="SELECT stud_id,stud_name,id_no,username,password,sec_name,sec_id FROM students 
+                    join sections on sections_sec_id = sec_id where sec_id = '".$section."'";
 
                     //use for MySQLi-OOP
                     $query = $conection_db->query($sql);

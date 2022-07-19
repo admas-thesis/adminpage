@@ -37,6 +37,7 @@
                             </div>
         </div>  
             <div class="modal-footer">
+                <a href="multiple-data/multistud.php" class="btn btn-primary">Add Multiple students</a>
                 <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
                 <button type="submit" name="add" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</a>
             </div>
@@ -174,7 +175,7 @@
                                         $secout = $conection_db->query($sec);
                                         while($fetchsec = $secout->fetch_assoc()){
                                         ?>
-                                        <option value="<?php echo $fetchsec['sec_name']; ?>" ><?php echo $fetchsec['sec_name']; ?> </option>
+                                        <option value="<?php echo $fetchsec['sec_id']; ?>" ><?php echo $fetchsec['sec_name']; ?> </option>
                                     <?php
                                         }
                                         ?>

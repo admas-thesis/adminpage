@@ -7,15 +7,76 @@
 		include_once('../includes/db/config.php');
 		$co ="SELECT course_code,course_name from courses where course_id = '".$course."' ";
 		$sec ="SELECT sec_name from sections where sec_id = '".$section."' ";
-		$query=" SELECT distinct ses_date from session where sections_sec_id = '".$section."' and courses_course_id = '".$course."'";
+		$arrays = array();
+		$query = "SELECT distinct ses_date from session where sections_sec_id = '".$section."' and courses_course_id = '".$course."'";
+		$result = mysqli_query($conection_db, $query) or die(mysqli_error($conection_db));
+		while ($row = mysqli_fetch_assoc($result)) {
+			foreach ($row as $data) {
+				array_push($arrays, $data);
+			}
+		}
+
+		$student_name = array();
+		$student_id = array();
 		
-		$sql =" SELECT att_id,status,students_id_no,session_ses_id,stud_name,ses_date,courses_course_id from attendance 
-						 join session on session_ses_id=ses_id 
-						 join students on students_id_no = id_no where courses_course_id = '".$course."'";
+		$query = "SELECT id_no from students  where sections_sec_id = '$section'";
+		$studquery = "SELECT stud_name from students  where sections_sec_id = '$section'";
+		
+		$result = mysqli_query($conection_db, $query) or die(mysqli_error($conection_db));
+		while ($rows = mysqli_fetch_assoc($result)) {
+			foreach ($rows as $count) {
+				array_push($student_id, $count);
+			}
+		}
+
+		$studresult = mysqli_query($conection_db, $studquery) or die(mysqli_error($conection_db));
+                        while ($studrows = mysqli_fetch_assoc($studresult)) {
+                            foreach ($studrows as $studcount) {
+                                array_push($student_name, $studcount);
+                            }
+                        }
+
+		//fetch Session dates from db and add to att_date array
+		$att_date = array();
+		$sql = "SELECT distinct ses_date from session where sections_sec_id = '$section' ";
+		$data = mysqli_query($conection_db, $sql) or die(mysqli_error($conection_db));
+
+		while ($row = mysqli_fetch_assoc($data)) {
+			foreach ($row as $count_date) {
+				array_push($att_date, $count_date);
+			}
+		}
+		$main_array = array();
+		$sub_array = array();
+
+		//select a student from student list and get the status on a session
+		// and store attendance of that student for all sessions on sub_array 
+		for ($a = 0; $a < sizeof($student_id); $a++) {
+
+
+			for ($d = 0; $d < sizeof($att_date); $d++) {
+				$sqm = "select status from attendance join session on
+						 session_ses_id = session.ses_id where ses_date= '$att_date[$d]' and
+						  students_id_no = '$student_id[$a]' and courses_course_id= '$course' ;";
+				$sub_data = mysqli_query($conection_db, $sqm) or die(mysqli_error($conection_db));
+
+				while ($rowsr = mysqli_fetch_assoc($sub_data)) {
+					foreach ($rowsr as $sub_count) {
+						array_push($sub_array, $sub_count);
+					}
+				}
+			}
+			//Add that students data to the main_array
+			$main_array[$a] = $sub_array;
+			//remove first students data from Sub_array
+			unset($sub_array);
+			//initialize Subarray
+			$sub_array = array();
+		}
+		
 		$coout=mysqli_query($conection_db,$co);
 		$secout=mysqli_query($conection_db,$sec);
-		$output=mysqli_query($conection_db,$query);
-		$result=mysqli_query($conection_db,$sql); 
+		
 		while($out = $coout->fetch_assoc()){
 			$cocdis = $out['course_code'];
 			$condis = $out['course_name'];
@@ -25,16 +86,22 @@
 		}
 		//use for MySQLi OOP
 		$contents = '';
-		while($in = $result->fetch_assoc()){
+		for ($i = 0; $i < sizeof($main_array); $i++) {
 			$contents .= "
 			<tr>
-				<td>".$in['stud_name']."</td>
-				<td>ADMA/".$in['students_id_no']."</td>
-				<td>Co Sc</td>
-				<td>".$in['status']."</td>
-			</tr>
+			<td> ".$student_name[$i]." </td>
+			<td> ".$student_id[$i]." </td>
+			<td>Co Sc</td>
 			";
-		}
+			//insert status of every student into each column
+			for ($jj = 0; $jj < sizeof($main_array[$i]); $jj++) {
+			$contents .= "
+				<td> ".$main_array[$i][$jj]." </td>
+				";
+			}
+			$contents .= " </tr>
+			";
+			}
 	require_once('../Assets/tcpdf/tcpdf.php');  
     $pdf = new TCPDF('L', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $pdf->SetCreator(PDF_CREATOR);  
@@ -48,29 +115,35 @@
     $pdf->setPrintHeader(false);  
     $pdf->setPrintFooter(false);  
     $pdf->SetAutoPageBreak(TRUE, 10);  
-    $pdf->SetFont('helvetica', '', 11);  
+    $pdf->SetFont('helvetica', '', 8);  
     $pdf->AddPage();
+	$image_path = 'assets/img/logo.jpg';
 	$content = '';
     $content .= "
-      	<h2 align='center'>Admas University</h2>
-		<h3 align='center'>Degree Students Attendance Sheet</h3>
+      	<h2>Admas University</h2>
+		<h3>Degree Students Attendance Sheet</h3>
       	<h4>Course Title: ".$cocdis."/".$condis.":</h4>
 		<h4>Department: Co Sc</h4>
 		<h4>Section: ".$sndis."</h4> 
 		<h4>Term: ".$term." </h4>
-      	<table>  
-           <tr>  
-				<th>Full Name</th>
-				<th>Student ID</th>
-				<th>Department</th>";
-	while($row = $output->fetch_assoc()){
-	$content .= "
-			<th>".$row['ses_date']."</th>
-      ";}
+      	<table>
+		  <tr>
+		  	<th>Full Name</th>
+			<th>Student ID</th>
+			<th>Department</th>
+		  "; 
+		  foreach ($arrays as $dates) {
+			$content .= "
+			  <th> ".$dates." </th>
+			  ";
+			}
 	$content .= "</tr>";
     $content .= $contents;  
     $content .= "</table>
 	<style>
+	h2,h3 {
+		text-align: center;
+	  }
 	table {
 		border-collapse:collapse;
 	}
@@ -86,6 +159,4 @@
 	";  
     $pdf->WriteHTMLCell(290,0,3,'',$content,0); 
     $pdf->Output('Attendance.pdf', 'I');
-	
-
 ?>

@@ -1,13 +1,16 @@
 <?php
 		include_once('../includes/db/config.php');
-		$sql ="SELECT * FROM courses";
+		$sql =" SELECT coco_id, course_name, ins_name, sec_name from course_comb join 
+                courses on courses_course_id=course_id join instructors on instructors_ins_id=ins_id 
+				join sections on sections_sec_id=sec_id;";
 		$result = mysqli_query($conection_db, $sql);
 		while($row = $result->fetch_assoc()){
 			$contents .= "
 			<tr>
-			<td> ".$row['course_id']." </td>
+			<td> ".$row['coco_id']." </td>
 			<td> ".$row['course_name']." </td>
-			<td> ".$row['course_code']." </td>
+			<td> ".$row['ins_name']." </td>
+			<td> ".$row['sec_name']." </td>
 			</tr>
 			";
 			}
@@ -30,12 +33,13 @@
     $content .= "
       	<h2>Admas University</h2>
         <h3>Department: Co Sc</h4>
-		<h3>Course List</h3> 
+		<h3>Assignned Classes</h3> 
       	<table>
 		  <tr>
 		  	<th>Index</th>
 		  	<th>Course Name</th>
-			<th>Course Code</th>
+			<th>Instructor</th>
+			<th>Section</th>
 			</tr>";
     $content .= $contents;  
     $content .= "</table>
@@ -57,5 +61,5 @@
 	</style>
 	";  
     $pdf->WriteHTMLCell(290,0,3,'',$content,0); 
-    $pdf->Output('Course.pdf', 'I');
+    $pdf->Output('Class.pdf', 'I');
 ?>
