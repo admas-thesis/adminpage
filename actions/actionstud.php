@@ -37,7 +37,7 @@
                             </div>
         </div>  
             <div class="modal-footer">
-                <a href="multiple-data/multistud.php" class="btn btn-primary">Add Multiple students</a>
+                <a href="multiple-data/multistud.php" class="btn btn-primary">Add Multiple Students</a>
                 <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
                 <button type="submit" name="add" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</a>
             </div>

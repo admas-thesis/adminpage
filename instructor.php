@@ -7,15 +7,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: index.php");
     exit;
 }
-if(isset($_SESSION['message'])){
-    ?>
-    <div class="alert alert-info text-center" style="margin-top:20px;">
-        <?php echo $_SESSION['message']; ?>
-    </div>
-    <?php
-
-    unset($_SESSION['message']);
-}
 ?>
 <!DOCTYPE html>
 	<html>
@@ -40,6 +31,30 @@ if(isset($_SESSION['message'])){
                 <!-- navbar -->
                 <?php include_once 'includes/sidebar/navbar.php';?>
                 <!-- end navbar -->
+
+                <?php  
+                       if(isset($_SESSION['message'])){
+                           ?>
+                           <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                               <?php echo $_SESSION['message']; ?>
+                               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                           </div>
+                           <?php
+                           unset($_SESSION['message']);
+                       }
+
+                    if(isset($_SESSION['status']))
+                    {
+                        ?>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Hey!</strong> <?php echo $_SESSION['status']; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php
+                        unset($_SESSION['status']);
+                    }
+                ?>
+
                 <h3>Instructors Data</h3>
                 <hr>
                 <?php

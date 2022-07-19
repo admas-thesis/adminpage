@@ -3,7 +3,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add New</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Assign New Class</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -53,6 +53,7 @@
                             </div>
         </div>  
             <div class="modal-footer">
+                <a href="multiple-data/multiclass.php" class="btn btn-primary">Assign Multiple classes</a>
                 <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
                 <button type="submit" name="add" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</a>
             </div>
