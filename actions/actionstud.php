@@ -74,7 +74,7 @@
                       </div> 
                       <div class="form-group">
                             <select class="custom-select" name="section">
-                                    <option value="<?php echo $row['sections_sec_id']; ?>"><?php echo $row['sections_sec_id']; ?> </option>
+                                    <option value="<?php echo $row['sec_name']; ?>"  disabled= ""selected=""><?php echo $row['sec_name']; ?> </option>
                                     <?php 
                                         $sec ="SELECT * FROM sections";
                                         $secout = $conection_db->query($sec);
@@ -123,7 +123,7 @@
                         <input class="form-control" name="password" value="<?php echo $row['password']; ?>" disabled>
                       </div> 
                       <div class="form-group">
-                        <input class="form-control" name="section" value="<?php echo $row['sections_sec_id']; ?>" disabled>
+                        <input class="form-control" name="section" value="<?php echo $row['sec_name']; ?>" disabled>
                       </div> 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
