@@ -25,7 +25,11 @@
         <?php include 'includes/css_style/style_modal.php'; ?>
         <!-- style css php -->
         <?php include_once 'includes/css_style/style.php';?>
-
+        <script src=
+"//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js">
+</script>
+        <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js">
+</script>
          <!-- library css -->
     
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
@@ -42,7 +46,7 @@
                 <!-- end navbar -->
                 <h3 class="titulo-tabla">Attendance List</h3>
 <hr>
-<table id="example" class="table table-striped table-bordered" style="width:100%">
+<table name="attendance" id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <?php
                          require_once "includes/db/config.php";
@@ -147,7 +151,16 @@
 		</div>
         <!-- <script> js php import</script> -->
         <?php include_once 'includes/script/js.php';?>
-
+                     
+<script>
+ 
+ $(document).ready(function () {
+    $("#example").table2excel({
+        filename: "Students.xls"
+    });
+ });
+ 
+</script>
         <!-- library js -->
         <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>

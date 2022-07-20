@@ -38,9 +38,8 @@ require_once "php_login.php";
           </div>
         <div class="text-center mb-4">
             <h1 class="h3 mb-0">Please sign in</h1>
-            <p>Signin to manage your account.</p>
         </div>
-     
+       
         <div class="js-form-message mb-3" <?= (!empty($email_err)) ? 'has-error' : ''; ?>">
             <div class="js-focus-state input-group form">
               <div class="input-group-prepend form__prepend">
@@ -63,7 +62,13 @@ require_once "php_login.php";
             </div>
             <span class="help-block"><?= $password_err; ?></span>
 
-        </div>        
+        </div>  
+        <fieldset>
+        <input style="margin-left: 50px; width: 18px;" type="radio" name="user"  value="admin" checked>
+        <label style="color: black; ">Admin</label>
+        <input style="margin-left: 50px; width: 18px;" type="radio" name="user"  value="instructor">
+        <label style="color: black;">Instructor</label>
+        </fieldset>      
         <div class="row mb-3">
             <div class="col-6">
               <!-- Checkbox -->
