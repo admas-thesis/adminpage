@@ -40,23 +40,8 @@
                 <hr>
     <form  method="POST" action="filter2.php" id="attendance">  
         <div class="form-group">
-            <div class="row">
-                <div class="col-md-3">
-                <select class="custom-select" name="course" id="course" required>
-                       <option value="" disabled= ""selected="">Select Course</option>
-                        <?php 
-                        $co ="SELECT * FROM courses";
-                        $coout = $conection_db->query($co);
-                        while($fetchco = $coout->fetch_assoc()){
-                        ?>
-                        <option value="<?php echo $fetchco['course_id']; ?>" ><?php echo $fetchco['course_code']; ?>: <?php echo $fetchco['course_name']; ?> </option>
-                    <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-    
-                <div class="col-md-3">
+        <div class="row">
+        <div class="col-md-3">
                 <select class="custom-select" name="section" id="section" required>
                         <option value="" disabled= ""selected="">Select Section</option>
                         <?php 
@@ -70,6 +55,12 @@
                         ?>
                 </select>
                 </div>
+            
+                <div class="col-md-3">
+                <select class="custom-select" name="course" id="course"  required>
+                        <option value="" disabled= ""selected="">Select Course first</option>
+                </select>
+                  </div>
                 <div class="col-md-3">
                 <input type="submit" value="Submit" name="submit" class="btn btn-success">
                 </div>
@@ -96,7 +87,27 @@
         <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
         
         <!-- internal script -->
-        <script src="assets/js/export.js"></script>
+        
+        <script>
+$(document).ready(function(){
+    $('#section').on('change', function(){
+        var section_name = $(this).val();
+        if(section_name){
+            $.ajax({
+                type:'POST',
+                url:'coureslister.php',
+                data:'section_id='+section_name,
+                success:function(html){
+                    $('#course').html(html);
+                }
+            }); 
+        }else{
+            $('#course').html('<option value="">Select course first</option>');
+        }
+    });
+});
+</script>
+<script src="assets/js/export.js"></script>
 		<!-- <script> import</script> -->
 	</body>
 </html>
